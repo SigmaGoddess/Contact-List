@@ -1,63 +1,64 @@
-package generation.org; // Paquete del proyecto
+package generation.org;
 
-// Clase que define un contacto en la agenda
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Clase que representa un contacto en la agenda.
+ * Incluye una lista estática con contactos precargados para pruebas.
+ */
 public class Contacto {
 
-    // Atributos privados (encapsulación)
-    private String firstName;   // Nombre del contacto
-    private String lastName;    // Apellido del contacto
-    private String phoneNumber; // Teléfono del contacto
+    private String nombre;
+    private String telefono;
 
-    // Constructor: crea un nuevo contacto con sus datos
-    public Contacto(String firstName, String lastName, String phoneNumber) {
-        // Validamos que nombre y apellido no estén vacíos
-        if (firstName == null || firstName.isEmpty() ||
-            lastName == null || lastName.isEmpty()) {
-            throw new IllegalArgumentException("El nombre y apellido no pueden estar vacíos.");
+    // Lista pública de contactos precargados
+    public static List<Contacto> listaContactos = new ArrayList<>();
+
+    // Bloque estático para inicializar la lista
+    static {
+        listaContactos.add(new Contacto("Alice", "111"));
+        listaContactos.add(new Contacto("Bob", "222"));
+        listaContactos.add(new Contacto("Charlie", "555"));
+        listaContactos.add(new Contacto("David", "666"));
+        listaContactos.add(new Contacto("Eva", "777"));
+        listaContactos.add(new Contacto("Felix", "888"));
+        listaContactos.add(new Contacto("Hector", "101"));
+        listaContactos.add(new Contacto("Inés", "123"));
+        listaContactos.add(new Contacto("Juan", "404"));
+    }
+
+    public Contacto(String nombre, String telefono) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío.");
         }
-        this.firstName = firstName.trim();     // Guardamos el nombre
-        this.lastName = lastName.trim();       // Guardamos el apellido
-        this.phoneNumber = phoneNumber.trim(); // Guardamos el teléfono
+        this.nombre = nombre.trim();
+        this.telefono = telefono;
     }
 
-    // Getter para obtener el nombre
-    public String getFirstName() {
-        return firstName;
+    public String getNombre() {
+        return nombre;
     }
 
-    // Getter para obtener el apellido
-    public String getLastName() {
-        return lastName;
+    public String getTelefono() {
+        return telefono;
     }
 
-    // Getter para obtener el teléfono
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public void setTelefono(String nuevoTelefono) {
+        this.telefono = nuevoTelefono;
     }
 
-    // Setter para cambiar el teléfono
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    // Dos contactos se consideran iguales si tienen el mismo nombre
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; 
-        if (!(obj instanceof Contacto)) return false; 
-        Contacto other = (Contacto) obj; 
-        return this.firstName.equalsIgnoreCase(other.firstName); 
+        if (obj instanceof Contacto) {
+            Contacto otro = (Contacto) obj;
+            return this.nombre.equalsIgnoreCase(otro.nombre);
+        }
+        return false;
     }
 
-    // Hashcode basado en el nombre (coherente con equals)
-    @Override
-    public int hashCode() {
-        return firstName.toLowerCase().hashCode();
-    }
-
-    // Representación en texto del contacto
     @Override
     public String toString() {
-        return firstName + " " + lastName + " - " + phoneNumber;
+        return nombre + " - " + telefono;
     }
 }

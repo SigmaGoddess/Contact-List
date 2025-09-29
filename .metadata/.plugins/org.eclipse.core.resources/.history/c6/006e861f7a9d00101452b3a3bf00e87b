@@ -1,0 +1,67 @@
+package generation.org;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Clase que representa un contacto en la agenda.
+ * Incluye una lista estática con 10 contactos precargados.
+ */
+public class Contacto {
+
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+
+    // Lista pública de contactos precargados
+    public static List<Contacto> demoContacts = new ArrayList<>();
+
+    // Bloque estático para inicializar la lista
+    static {
+        demoContacts.add(new Contacto("Ana", "Ramirez", "5551234567"));
+        demoContacts.add(new Contacto("Luis", "Gonzalez", "5552345678"));
+        demoContacts.add(new Contacto("Maria", "Lopez", "5553456789"));
+        demoContacts.add(new Contacto("Carlos", "Hernandez", "5554567890"));
+        demoContacts.add(new Contacto("Sofia", "Martinez", "5555678901"));
+        demoContacts.add(new Contacto("Jorge", "Torres", "5556789012"));
+        demoContacts.add(new Contacto("Valeria", "Flores", "5557890123"));
+        demoContacts.add(new Contacto("Diego", "Castillo", "5558901234"));
+        demoContacts.add(new Contacto("Fernanda", "Ruiz", "5559012345"));
+        demoContacts.add(new Contacto("Pablo", "Mendoza", "5550123456"));
+    }
+
+    public Contacto(String firstName, String lastName, String phoneNumber) {
+        if (firstName == null || firstName.trim().isEmpty() || lastName == null || lastName.trim().isEmpty()) {
+            throw new IllegalArgumentException("First name and last name cannot be empty.");
+        }
+        this.firstName = firstName.trim();
+        this.lastName = lastName.trim();
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String newPhoneNumber) {
+        this.phoneNumber = newPhoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Contacto) {
+            Contacto other = (Contacto) obj;
+            return this.getFullName().equalsIgnoreCase(other.getFullName());
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName() + " - " + phoneNumber;
+    }
+}
