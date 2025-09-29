@@ -7,29 +7,29 @@ Cada contacto está definido por un nombre y un teléfono.
 
 🚀 Características
 
-Añadir un contacto nuevo.
-
-Verificar si un contacto existe.
-
-Listar todos los contactos de la agenda.
-
-Buscar un contacto por nombre.
-
-Eliminar un contacto existente.
-
-Modificar el teléfono de un contacto.
-
-Mostrar cuántos espacios libres quedan en la agenda.
+		Añadir un contacto nuevo.
+		
+		Verificar si un contacto existe.
+		
+		Listar todos los contactos de la agenda.
+		
+		Buscar un contacto por nombre.
+		
+		Eliminar un contacto existente.
+		
+		Modificar el teléfono de un contacto.
+		
+		Mostrar cuántos espacios libres quedan en la agenda.
 
 La agenda tiene un tamaño máximo de contactos (10 por defecto, pero puede configurarse).
 
 No se permite:
 
-Nombres vacíos.
-
-Contactos duplicados.
-
-Exceder la capacidad máxima.
+		Nombres vacíos.
+		
+		Contactos duplicados.
+		
+		Exceder la capacidad máxima.
 
 🛠️ Tecnologías utilizadas
 
