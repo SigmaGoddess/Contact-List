@@ -5,31 +5,69 @@ package generation.org;
 import java.util.Scanner;
 
 public class Menu {
-
-	void desplegarMenu() {
-		System.out.println("Bienvenido al cajero automático");
-		System.out.println("Qué deseas hacer? Ingrese el número de opción");
-		System.out.println("1.- Añadir Contacto");
-		System.out.println("2.- Saber si un contacto existe");
-		System.out.println("3.- Mostrar Contactos");
-		System.out.println("4.- Buscar Contacto");
-		System.out.println("5.- Eliminar Contacto");
-		System.out.println("6.- Modificar Télefono");
-		System.out.println("7.- Saber cuántos espacios me quedan");
-
-	}
-
-	int registrarOpcion() {
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		return sc.nextInt();
+		Agenda agenda = new Agenda();
+
+		while (true) {
+			System.out.println("\nMENÚ");
+			System.out.println("1. Añadir contacto");
+			System.out.println("2. Listar contactos");
+			System.out.println("3. Buscar contacto por nombre");
+			System.out.println("4. Eliminar contacto por nombre");
+			System.out.println("5. Modificar teléfono");
+			System.out.println("6. Espacios libres");
+			System.out.println("0. Salir");
+			System.out.print("Elige opción: ");
+
+			String opcion = sc.nextLine();
+
+			switch (opcion) {
+				case "1":
+					System.out.print("Nombre: ");
+					String nombre = sc.nextLine();
+					System.out.print("Teléfono: ");
+					String telefono = sc.nextLine();
+					agenda.añadirContacto(new Contacto(nombre, telefono));
+					break;
+
+				case "2":
+					agenda.listarContactos();
+					break;
+
+				case "3":
+					System.out.print("Nombre a buscar: ");
+					agenda.buscarContacto(sc.nextLine());
+					break;
+
+				case "4":
+					System.out.print("Nombre a eliminar: ");
+					agenda.eliminarContacto(sc.nextLine());
+					break;
+
+				case "5":
+					System.out.print("Nombre: ");
+					String n = sc.nextLine();
+					System.out.print("Apellido: ");
+					String a = sc.nextLine();
+					System.out.print("Nuevo teléfono: ");
+					String t = sc.nextLine();
+					agenda.modificarTelefono(n, a, t);
+					break;
+
+				case "6":
+					agenda.espaciosLibres();
+					break;
+
+				case "0":
+					System.out.println("¡Hasta luego!");
+					sc.close();
+					return;
+
+				default:
+					System.out.println("Opción no válida.");
+			}
+		}
 	}
 
-	int validarEntrada(int opcion) {
-		while (opcion != 1 && opcion != 2 && opcion != 3 && opcion != 4 && opcion != 5 && opcion != 6 && opcion != 7) {
-			System.out.println("Error. ¡Opción inválida!");
-			desplegarMenu();
-			opcion = registrarOpcion();
-		}
-		return opcion;
-	}
 }
