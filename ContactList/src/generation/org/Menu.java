@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Menu {
 
 	void desplegarMenu() {
-		System.out.println("Bienvenido al cajero automático");
+		System.out.println("Bienvenido a tu Agenda de Contactos");
 		System.out.println("Qué deseas hacer? Ingrese el número de opción");
 		System.out.println("1.- Añadir Contacto");
 		System.out.println("2.- Saber si un contacto existe");
