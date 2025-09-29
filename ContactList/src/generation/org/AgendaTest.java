@@ -1,6 +1,5 @@
 package generation.org;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,19 +16,30 @@ class Contacto {
         this.telefono = telefono;
     }
 
-    public String getNombre() { return nombre; }
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Contacto contacto = (Contacto) o;
         // La regla dice que un contacto es igual a otro cuando sus nombres son iguales.
         return nombre.equalsIgnoreCase(contacto.nombre);
     }
-    // No necesitamos hashCode() para estas pruebas, pero es buena práctica en producción.
+    // No necesitamos hashCode() para estas pruebas, pero es buena práctica en
+    // producción.
 }
 
 public class AgendaTest {
@@ -44,7 +54,7 @@ public class AgendaTest {
     }
 
     // --- Prueba: añadirContacto() ---
-    
+
     @Test
     @DisplayName("Debe añadir un contacto exitosamente")
     void testAñadirContacto_Exito() {
@@ -72,7 +82,8 @@ public class AgendaTest {
 
         // Verificamos que el contacto extra no se haya añadido
         assertFalse(agenda.existeContacto(cExtra), "El contacto Extra no debería haberse añadido.");
-        assertEquals(agenda.getTamañoMaximo(), agenda.getContactos().length, "El número de contactos debe ser el máximo.");
+        assertEquals(agenda.getTamañoMaximo(), agenda.getContactos().length,
+                "El número de contactos debe ser el máximo.");
     }
 
     @Test
@@ -87,7 +98,8 @@ public class AgendaTest {
         // Verificamos que solo esté el primero (o uno) y que no haya 2
         assertEquals(1, agenda.getContactos().length, "Solo se debe haber añadido un contacto.");
         // Verificamos que el teléfono sea el del primero
-        assertEquals("222", agenda.buscarContacto("Bob").getTelefono(), "El teléfono debe ser el del primer contacto añadido.");
+        assertEquals("222", agenda.buscarContacto("Bob").getTelefono(),
+                "El teléfono debe ser el del primer contacto añadido.");
     }
 
     @Test
@@ -107,7 +119,7 @@ public class AgendaTest {
         Contacto cBusqueda = new Contacto("cHArlie", "cualquiertelefono"); // Misma lógica en equals
         assertTrue(agenda.existeContacto(cBusqueda), "Charlie debería existir.");
     }
-    
+
     // --- Prueba: eliminarContacto() ---
 
     @Test
@@ -129,22 +141,22 @@ public class AgendaTest {
     @DisplayName("Debe fallar al intentar eliminar un contacto que no existe")
     void testEliminarContacto_NoExiste() {
         agenda.añadirContacto(new Contacto("Felix", "888"));
-        
+
         agenda.eliminarContacto("Gabo"); // No existe
 
         assertEquals(1, agenda.getContactos().length, "El número de contactos no debe cambiar.");
     }
 
     // --- Prueba: modificarTelefono() ---
-    
+
     @Test
     @DisplayName("Debe modificar el teléfono de un contacto existente")
     void testModificarTelefono_Exito() {
         String nombre = "Hector";
         agenda.añadirContacto(new Contacto(nombre, "101"));
-        
+
         agenda.modificarTelefono(nombre, "999");
-        
+
         // Buscamos el contacto y verificamos el nuevo teléfono
         Contacto c = agenda.buscarContacto(nombre);
         assertNotNull(c);
@@ -155,13 +167,13 @@ public class AgendaTest {
     @DisplayName("Debe fallar al intentar modificar el teléfono de un contacto que no existe")
     void testModificarTelefono_NoExiste() {
         agenda.modificarTelefono("Inés", "123");
-        
+
         assertNull(agenda.buscarContacto("Inés"), "El contacto Inés no debería existir.");
         assertEquals(0, agenda.getContactos().length, "La agenda debe seguir vacía.");
     }
-    
+
     // --- Prueba: espaciosLibres() ---
-    
+
     @Test
     @DisplayName("Debe indicar correctamente los espacios libres")
     void testEspaciosLibres() {
