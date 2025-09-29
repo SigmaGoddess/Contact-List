@@ -75,9 +75,9 @@ Bienvenido al directorio de contactos
 		7.- Saber cuántos espacios me quedan
 
 👥 Integrantes del equipo
-●  Mariana Islas
-● Gerardo Alberto López García
-● Nicteha Fragoso Trigueros
-● Erik Cornelio Hernández
-● Sheila Miranda Lagunas
+		●  Mariana Islas
+		● Gerardo Alberto López García
+		● Nicteha Fragoso Trigueros
+		● Erik Cornelio Hernández
+		● Sheila Miranda Lagunas
 
