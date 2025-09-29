@@ -1,199 +1,85 @@
 package generation.org;
 
-import java.util.Arrays;
-
-
+import java.util.ArrayList;
 
 public class Agenda {
+    private ArrayList<Contacto> contactos;
+    private int maxContactos;
 
-    private static final int tamañoPorDefecto = 10;
-    private Contacto[] contactos;
-    private int indiceContactos; // Rastrea cuántos contactos hay actualmente
-
-    /**
-     * Constructor por defecto. Crea una agenda con el tamaño por defecto (10).
-     */
+    // Constructor con tamaño por defecto
     public Agenda() {
-        this.contactos = new Contacto[tamañoPorDefecto];
-        this.indiceContactos = 0;
+        this.maxContactos = 10;
+        this.contactos = new ArrayList<>();
     }
 
-    /**
-     * Verifica si la agenda está llena.
-     * @return true si la agenda está llena, false en caso contrario.
-     */
-    public boolean estaLlena() {
-        return this.indiceContactos == this.contactos.length;
+    // Constructor con tamaño personalizado
+    public Agenda(int maxContactos) {
+        this.maxContactos = maxContactos;
+        this.contactos = new ArrayList<>();
     }
 
-    /**
-     * Indica cuántos contactos más se pueden ingresar en la agenda.
-     * @return El número de espacios libres.
-     */
-    public int espaciosLibres() {
-        return this.contactos.length - this.indiceContactos;
-    }
-
-    /**
-     * Indica si el contacto pasado existe o no (basado en el nombre).
-     * @param c El contacto a buscar.
-     * @return true si el contacto existe, false en caso contrario.
-     */
-    public boolean existeContacto(Contacto c) {
-        if (c == null) {
-            return false;
-        }
-        // Recorre solo los contactos que han sido añadidos (hasta indiceContactos)
-        for (int i = 0; i < this.indiceContactos; i++) {
-            if (this.contactos[i].equals(c)) {
-                return true;
-            }
-        }
-        return false;
-        // Alternativamente, se puede usar Arrays.asList(contactos).contains(c) si el array está lleno
-    }
-
-    /**
-     * Añade un contacto a la agenda.
-     * @param c El contacto a añadir.
-     */
     public void añadirContacto(Contacto c) {
-        if (c == null) {
-            System.out.println("ERROR: El contacto no puede ser nulo.");
+        if (contactos.size() >= maxContactos) {
+            System.out.println("No se puede añadir: la agenda está llena.");
             return;
         }
-
-        if (c.getNombre() == null || c.getNombre().trim().isEmpty()) {
-            System.out.println("ERROR: El nombre y/o apellido del contacto no puede estar vacío.");
+        if (contactos.contains(c)) {
+            System.out.println("No se puede añadir: el contacto ya existe.");
             return;
         }
-
-        if (estaLlena()) {
-            System.out.println("ERROR: La agenda está llena. No se puede añadir a " + c.getNombre() + ".");
-            return;
-        }
-
-        if (existeContacto(c)) {
-            System.out.println("ERROR: Ya existe un contacto con el nombre " + c.getNombre() + ".");
-            return;
-        }
-
-        // Si pasa todas las validaciones, se añade el contacto al siguiente índice libre.
-        this.contactos[this.indiceContactos] = c;
-        this.indiceContactos++;
-        System.out.println("ÉXITO: Contacto " + c.getNombre() + " se ha añadido correctamente.");
+        contactos.add(c);
+        System.out.println("Contacto añadido con éxito.");
     }
 
-    /**
-     * Lista todos los contactos de la agenda.
-     */
+    public boolean existeContacto(Contacto c) {
+        return contactos.contains(c);
+    }
+
     public void listarContactos() {
-        if (this.indiceContactos == 0) {
+        if (contactos.isEmpty()) {
             System.out.println("La agenda está vacía.");
             return;
         }
-
-        System.out.println("\n--- Lista de Contactos (" + this.indiceContactos + " / " + this.contactos.length + ") ---");
-        for (int i = 0; i < this.indiceContactos; i++) {
-            Contacto c = this.contactos[i];
-            System.out.println((i + 1) + ". Nombre: " + c.getNombre() + ", Teléfono: " + c.getTelefono());
+        System.out.println("Lista de contactos:");
+        for (Contacto c : contactos) {
+            System.out.println(c);
         }
-        System.out.println("----------------------------------------------");
     }
 
-    /**
-     * Busca un contacto por su nombre y muestra su teléfono.
-     * @param nombre El nombre del contacto a buscar.
-     * @return El contacto encontrado o null si no existe.
-     */
-    public Contacto buscarContacto(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            System.out.println("ERROR: El nombre de búsqueda no puede ser vacío.");
-            return null;
-        }
-
-        // Creamos un contacto temporal para aprovechar el método equals por nombre
-        Contacto contactoBusqueda = new Contacto(nombre, "");
-
-        for (int i = 0; i < this.indiceContactos; i++) {
-            if (this.contactos[i].equals(contactoBusqueda)) {
-                Contacto c = this.contactos[i];
-                System.out.println("Contacto encontrado: Nombre: " + c.getNombre() + ", Teléfono: " + c.getTelefono());
-                return c;
+    public void buscarContacto(String nombre) {
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println("📲 Teléfono de " + nombre + ": " + c.getTelefono());
+                return;
             }
         }
-
-        System.out.println("Contacto no encontrado con el nombre: " + nombre);
-        return null;
+        System.out.println("Contacto no encontrado.");
     }
 
-    /**
-     * Elimina el contacto correspondiente al nombre.
-     * @param nombre El nombre del contacto a eliminar.
-     */
     public void eliminarContacto(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            System.out.println("ERROR: El nombre a eliminar no puede ser vacío.");
-            return;
-        }
-
-        Contacto contactoBusqueda = new Contacto(nombre, "");
-
-        for (int i = 0; i < this.indiceContactos; i++) {
-            if (this.contactos[i].equals(contactoBusqueda)) {
-                // Contacto encontrado. Para eliminar en un array, debemos mover los elementos
-                // siguientes una posición hacia adelante (sobrescribir el eliminado).
-
-                // 1. Mover los elementos (Shift Izquierda)
-                for (int j = i; j < this.indiceContactos - 1; j++) {
-                    this.contactos[j] = this.contactos[j + 1];
-                }
-
-                // 2. Limpiar la última posición (opcional, pero buena práctica)
-                this.contactos[this.indiceContactos - 1] = null;
-
-                // 3. Decrementar el contador de contactos
-                this.indiceContactos--;
-
-                System.out.println("ÉXITO: Contacto con nombre '" + nombre + "' eliminado correctamente.");
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
+                contactos.remove(c);
+                System.out.println("Contacto eliminado con éxito.");
                 return;
             }
         }
-
-        System.out.println("ERROR: No se encontró ningún contacto con el nombre '" + nombre + "' para eliminar.");
+        System.out.println("No existe un contacto con ese nombre.");
     }
 
-    /**
-     * Permite modificar el teléfono de un contacto existente.
-     * @param nombre El nombre del contacto a modificar.
-     * @param nuevoTelefono El nuevo número de teléfono.
-     */
     public void modificarTelefono(String nombre, String nuevoTelefono) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            System.out.println("ERROR: El nombre del contacto no puede ser vacío.");
-            return;
-        }
-
-        Contacto contactoBusqueda = new Contacto(nombre, "");
-
-        for (int i = 0; i < this.indiceContactos; i++) {
-            if (this.contactos[i].equals(contactoBusqueda)) {
-                String telefonoAnterior = this.contactos[i].getTelefono();
-                this.contactos[i].setTelefono(nuevoTelefono);
-                System.out.println("ÉXITO: Teléfono de " + nombre + " modificado de " + telefonoAnterior + " a " + nuevoTelefono + ".");
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
+                c.setTelefono(nuevoTelefono);
+                System.out.println("Teléfono modificado con éxito.");
                 return;
             }
         }
-
-        System.out.println("ERROR: No se encontró ningún contacto con el nombre '" + nombre + "' para modificar.");
+        System.out.println("No existe un contacto con ese nombre.");
     }
 
-    // --- Métodos de apoyo para Pruebas (Opcional pero muy útil) ---
-    public Contacto[] getContactos() {
-        return Arrays.copyOf(this.contactos, this.indiceContactos); // Devuelve solo los contactos no nulos
-    }
-
-    public int getTamañoMaximo() {
-        return this.contactos.length;
+    public void espaciosLibres() {
+        int libres = maxContactos - contactos.size();
+        System.out.println("Espacios libres en la agenda: " + libres);
     }
 }
