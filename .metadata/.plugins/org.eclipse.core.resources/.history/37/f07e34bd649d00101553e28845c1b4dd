@@ -1,0 +1,25 @@
+package generation.org;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear un contacto
+        Contac contacto1 = new Contac("Erik", "Hernandez", "7203085580");
+
+        // Imprimir contacto
+        System.out.println(contacto1);
+
+        // Cambiar teléfono
+        contacto1.setPhoneNumber("5551234567");
+        System.out.println("Teléfono actualizado: " + contacto1.getPhoneNumber());
+
+        // Crear otro contacto
+        Contac contacto2 = new Contac("Maria", "Lopez", "1234567890");
+
+        // Comparar contactos
+        if (contacto1.equals(contacto2)) {
+            System.out.println("Los contactos tienen el mismo nombre.");
+        } else {
+            System.out.println("Los contactos son diferentes.");
+        }
+    }
+}

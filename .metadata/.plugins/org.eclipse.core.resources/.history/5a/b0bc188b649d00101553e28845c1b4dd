@@ -1,0 +1,10 @@
+package generation.org;
+
+public class Contac {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
