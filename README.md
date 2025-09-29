@@ -1,9 +1,8 @@
-# Contact-List
-Proyecto para un hackathon sobre la creación de un sistema que permita gestionar una agenda telefónica usando Java. 
 📒 Agenda Telefónica en Java
 
 Este proyecto implementa una agenda telefónica en Java que permite gestionar contactos utilizando un ArrayList.
 Cada contacto está definido por un nombre y un teléfono.
+
 
 🚀 Características
 
@@ -74,3 +73,11 @@ Bienvenido al directorio de contactos
 		5.- Eliminar Contacto
 		6.- Modificar Télefono
 		7.- Saber cuántos espacios me quedan
+
+👥 Integrantes del equipo
+●  Mariana Islas
+● Gerardo Alberto López García
+● Nicteha Fragoso Trigueros
+● Erik Cornelio Hernández
+● Sheila Miranda Lagunas
+
