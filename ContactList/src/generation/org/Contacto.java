@@ -1,0 +1,63 @@
+package generation.org; // Paquete del proyecto
+
+// Clase que define un contacto en la agenda
+public class Contacto {
+
+    // Atributos privados (encapsulación)
+    private String firstName;   // Nombre del contacto
+    private String lastName;    // Apellido del contacto
+    private String phoneNumber; // Teléfono del contacto
+
+    // Constructor: crea un nuevo contacto con sus datos
+    public Contacto(String firstName, String lastName, String phoneNumber) {
+        // Validamos que nombre y apellido no estén vacíos
+        if (firstName == null || firstName.isEmpty() ||
+            lastName == null || lastName.isEmpty()) {
+            throw new IllegalArgumentException("El nombre y apellido no pueden estar vacíos.");
+        }
+        this.firstName = firstName.trim();     // Guardamos el nombre
+        this.lastName = lastName.trim();       // Guardamos el apellido
+        this.phoneNumber = phoneNumber.trim(); // Guardamos el teléfono
+    }
+
+    // Getter para obtener el nombre
+    public String getFirstName() {
+        return firstName;
+    }
+
+    // Getter para obtener el apellido
+    public String getLastName() {
+        return lastName;
+    }
+
+    // Getter para obtener el teléfono
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    // Setter para cambiar el teléfono
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Dos contactos se consideran iguales si tienen el mismo nombre
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; 
+        if (!(obj instanceof Contacto)) return false; 
+        Contacto other = (Contacto) obj; 
+        return this.firstName.equalsIgnoreCase(other.firstName); 
+    }
+
+    // Hashcode basado en el nombre (coherente con equals)
+    @Override
+    public int hashCode() {
+        return firstName.toLowerCase().hashCode();
+    }
+
+    // Representación en texto del contacto
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + " - " + phoneNumber;
+    }
+}
